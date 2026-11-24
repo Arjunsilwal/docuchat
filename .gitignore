@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Tools
+.pytest_cache/
+.ruff_cache/
+
+# Secrets: never commit your API key
+.env
+
+# Local vector database (rebuilt with `python -m ragbot.ingest`)
+.chroma/
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
