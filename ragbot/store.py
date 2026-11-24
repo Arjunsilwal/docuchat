@@ -6,6 +6,7 @@ from collections.abc import Sequence
 from typing import Protocol
 
 import chromadb
+import numpy as np
 
 from ragbot.chunking import Chunk
 
@@ -57,11 +58,15 @@ class VectorStore:
             self.collection.add(
                 ids=[c.id for c in batch],
                 documents=[c.text for c in batch],
-                embeddings=self.embedder([c.text for c in batch]),
+                embeddings=self._vectors([c.text for c in batch]),
                 metadatas=[
                     {"source": c.source, "section": c.section, "page": c.page} for c in batch
                 ],
             )
+
+    def _vectors(self, texts: Sequence[str]) -> np.ndarray:
+        """Embed texts as a float32 NumPy array, the format ChromaDB stores."""
+        return np.asarray(self.embedder(texts), dtype=np.float32)
 
     def count(self) -> int:
         return self.collection.count()
@@ -72,24 +77,29 @@ class VectorStore:
         if n_results == 0:
             return []
         result = self.collection.query(
-            query_embeddings=self.embedder([query]),
+            query_embeddings=self._vectors([query]),
             n_results=n_results,
             include=["distances"],
         )
         ids = result["ids"][0]
-        distances = result["distances"][0]
+        distances = result["distances"][0] if result["distances"] else []
         return [(chunk_id, 1.0 - distance) for chunk_id, distance in zip(ids, distances)]
 
     def all_chunks(self) -> list[Chunk]:
         """Load every chunk (used to build the in-memory BM25 keyword index)."""
         result = self.collection.get(include=["documents", "metadatas"])
-        return [
-            Chunk(
-                id=chunk_id,
-                text=text,
-                source=meta["source"],
-                section=meta.get("section", ""),
-                page=meta.get("page", 0),
+        documents = result["documents"] or []
+        metadatas = result["metadatas"] or []
+        chunks = []
+        for chunk_id, text, meta in zip(result["ids"], documents, metadatas):
+            page = meta.get("page")
+            chunks.append(
+                Chunk(
+                    id=chunk_id,
+                    text=text,
+                    source=str(meta["source"]),
+                    section=str(meta.get("section", "")),
+                    page=page if isinstance(page, int) else 0,
+                )
             )
-            for chunk_id, text, meta in zip(result["ids"], result["documents"], result["metadatas"])
-        ]
+        return chunks

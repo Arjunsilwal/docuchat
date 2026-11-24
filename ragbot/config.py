@@ -34,7 +34,7 @@ class Settings:
     # Generation
     model: str = os.getenv("CLAUDE_MODEL", "claude-haiku-5-5")
     max_tokens: int = _int("MAX_TOKENS", 800)
-    temperature: float = float(os.getenv("TEMPERATURE", "0.2"))
+    #temperature: float = float(os.getenv("TEMPERATURE", "0.2"))
     max_history_turns: int = _int("MAX_HISTORY_TURNS", 6)
 
 
