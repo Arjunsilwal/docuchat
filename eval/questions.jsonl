@@ -1,0 +1,20 @@
+{"question": "How many weeks of parental leave do employees get?", "source": "employee-handbook.md", "answer_contains": "16 weeks"}
+{"question": "Can I take time off after having a baby?", "source": "employee-handbook.md", "answer_contains": "16 weeks"}
+{"question": "How many days can I work from home each week?", "source": "employee-handbook.md", "answer_contains": "up to 3 days per week"}
+{"question": "How much money do I get to set up my home office?", "source": "employee-handbook.md", "answer_contains": "$500"}
+{"question": "Which expense code is used for client entertainment?", "source": "employee-handbook.md", "answer_contains": "EXP-310"}
+{"question": "How many vacation days can I carry over to next year?", "source": "employee-handbook.md", "answer_contains": "Up to 5 unused days"}
+{"question": "What is the daily meal allowance when travelling for work?", "source": "employee-handbook.md", "answer_contains": "$75 per day"}
+{"question": "Do I need a doctor's note when I'm ill?", "source": "employee-handbook.md", "answer_contains": "doctor's note"}
+{"question": "How long does a password need to be?", "source": "it-security-policy.md", "answer_contains": "at least 14 characters"}
+{"question": "I forgot my password, how do I get back into my account?", "source": "it-security-policy.md", "answer_contains": "id.acme.example"}
+{"question": "My laptop was stolen, what should I do?", "source": "it-security-policy.md", "answer_contains": "within 1 hour"}
+{"question": "What ticket category do I use to report a security incident?", "source": "it-security-policy.md", "answer_contains": "SEC-7"}
+{"question": "Can I paste customer personal data into an AI tool?", "source": "it-security-policy.md", "answer_contains": "Restricted data must never be copied"}
+{"question": "Is SMS allowed for two-factor authentication?", "source": "it-security-policy.md", "answer_contains": "SMS codes are not allowed"}
+{"question": "How much does the Pro plan cost?", "source": "product-faq.md", "answer_contains": "$9.99 per month"}
+{"question": "Can a customer get their money back on a yearly subscription?", "source": "product-faq.md", "answer_contains": "within 30 days of purchase"}
+{"question": "What does error CD-1042 mean?", "source": "product-faq.md", "answer_contains": "CD-1042"}
+{"question": "How long are deleted files kept on paid plans?", "source": "product-faq.md", "answer_contains": "180 days"}
+{"question": "Is customer data used to train AI models?", "source": "product-faq.md", "answer_contains": "does not use customer files to train AI models"}
+{"question": "What is the largest file I can upload on the free plan?", "source": "product-faq.md", "answer_contains": "5 GB on Free"}
