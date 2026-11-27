@@ -36,5 +36,8 @@ class Settings:
     max_tokens: int = _int("MAX_TOKENS", 800)
     max_history_turns: int = _int("MAX_HISTORY_TURNS", 6)
 
+    # Which pipeline the app uses: "custom" (our own code) or "langchain"
+    pipeline: str = os.getenv("PIPELINE", "custom")
+
 
 settings = Settings()
