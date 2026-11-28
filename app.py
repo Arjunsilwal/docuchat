@@ -9,12 +9,12 @@ import streamlit as st
 
 from ragbot.config import settings
 from ragbot.ingest import ingest
+from ragbot.lc_pipeline import LangChainRAGPipeline, default_chat_model
+from ragbot.lc_retriever import DocuChatRetriever
 from ragbot.llm import ClaudeChat
 from ragbot.pipeline import RAGPipeline
 from ragbot.retriever import HybridRetriever, RetrievedChunk
 from ragbot.store import VectorStore
-from ragbot.lc_pipeline import LangChainRAGPipeline, default_chat_model
-from ragbot.lc_retriever import DocuChatRetriever
 
 st.set_page_config(page_title="DocuChat", page_icon="📄")
 
