@@ -13,12 +13,14 @@ from ragbot.llm import ClaudeChat
 from ragbot.pipeline import RAGPipeline
 from ragbot.retriever import HybridRetriever, RetrievedChunk
 from ragbot.store import VectorStore
+from ragbot.lc_pipeline import LangChainRAGPipeline, default_chat_model
+from ragbot.lc_retriever import DocuChatRetriever
 
 st.set_page_config(page_title="DocuChat", page_icon="📄")
 
 
 @st.cache_resource(show_spinner="Loading the knowledge base...")
-def load_pipeline() -> RAGPipeline | None:
+def load_pipeline() -> RAGPipeline | LangChainRAGPipeline | None:
     """Built once per server process, then reused for every message."""
     store = VectorStore(settings.db_dir, settings.collection)
     if store.count() == 0:
@@ -27,6 +29,12 @@ def load_pipeline() -> RAGPipeline | None:
     if store.count() == 0:
         return None
     retriever = HybridRetriever(store, candidates=settings.candidates)
+    if settings.pipeline == "langchain":
+        return LangChainRAGPipeline(
+            DocuChatRetriever(hybrid=retriever, top_k=settings.top_k),
+            default_chat_model(settings.model, settings.max_tokens),
+            settings.max_history_turns,
+        )
     llm = ClaudeChat(settings.model, settings.max_tokens)
     return RAGPipeline(retriever, llm, settings.top_k, settings.max_history_turns)
 
@@ -51,6 +59,7 @@ with st.sidebar:
     )
     st.caption(f"Model: `{settings.model}` · top-k: {settings.top_k}")
     st.caption("Retrieval: BM25 + vector search, fused with RRF")
+    st.caption(f"Pipeline: {settings.pipeline}")
     if st.button("Clear chat"):
         st.session_state.messages = []
         st.rerun()
